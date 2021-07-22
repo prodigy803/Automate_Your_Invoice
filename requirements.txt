@@ -5,8 +5,10 @@ ca-certificates=2021.7.5=hecd8cb5_1
 cairo=1.16.0=h8023c5d_1
 certifi=2021.5.30=py38hecd8cb5_0
 curl=7.71.1=hb0a8c7a_1
+dateparser=1.0.0=pypi_0
 fontconfig=2.13.1=ha9ee91d_0
 freetype=2.10.4=ha233b18_0
+fuzzywuzzy=0.18.0=pypi_0
 gettext=0.21.0=h7535e17_0
 glib=2.69.0=hdf23fa2_0
 icu=58.2=h0a44026_3
@@ -34,10 +36,16 @@ pixman=0.40.0=haf1e3a3_0
 poppler=0.81.0=h031bf0f_2
 poppler-data=0.4.10=hecd8cb5_0
 python=3.8.10=h88f2d9e_7
+python-dateutil=2.8.2=pypi_0
+python-levenshtein=0.12.2=pypi_0
+pytz=2021.1=pypi_0
 readline=8.1=h9ed2024_0
+regex=2021.7.6=pypi_0
 setuptools=52.0.0=py38hecd8cb5_0
+six=1.16.0=pypi_0
 sqlite=3.36.0=hce871da_0
 tk=8.6.10=hb0a8c7a_0
+tzlocal=2.1=pypi_0
 wheel=0.36.2=pyhd3eb1b0_0
 xz=5.2.5=h1de35cc_0
 zlib=1.2.11=h1de35cc_3
