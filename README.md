@@ -12,3 +12,14 @@ The phase 1 of the project will work on pure system generated invoices. In my pr
 
 The project is being developed in a MacOS requirements so windows users will find that the Requirements.txt doesnt quite work out-of-box for them. I have a work around for that. Please refer to the "Windows Requirements.txt" file for specific instructions on how to get the project running for their systems.
 
+Libraries that are needed:
+1. Poppler - I am using Conda for my package management so I just did conda install poppler
+2. Pdf2txt - pip install pdftotext
+3. Regex - For all those complex patterns (and probably left for the advanced users)
+4. Dateparse - For Dates
+5. FuzzyWuzzy - For those fields that we arent sure about.
+6. Python Levenstein - This just speeds us the FuzzyWuzzy Library.
+
+Libraries that are always good to have:
+1. Numpy - Numerical Computing Library
+2. Pandas - Enables handling of tabular type data and manipulating them in various ways.
