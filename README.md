@@ -23,3 +23,6 @@ Libraries that are needed:
 Libraries that are always good to have:
 1. Numpy - Numerical Computing Library
 2. Pandas - Enables handling of tabular type data and manipulating them in various ways.
+
+# Instructions for Creating the Template:
+You may use a excel file or a simple ".txt" file to create a template file:
