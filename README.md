@@ -4,7 +4,7 @@ It is a Python Library / Framework that aims to simplify the process of extracti
 
 What is what in this Project?
 
-While the ultimate goal is to have a convenient .exe file, the purposes of "this", we will stick a basic command line'isque interface and give the users options to set the template path either as a individual template or a series of templates (as part of a folder), next we will then allow the users to set the path of the invoices and then use the templates as a sort of rule-engine to extract the information from the invoices.
+While the ultimate goal is to have a convenient .exe file, for the purposes of "this" version, we will stick a basic command line interface and give the users options to set the template path either as a individual template or a series of templates (as part of a folder). Next we will then allow the users to set the path of the invoices and then use the templates as a sort of rule-engine to extract the information from the invoices.
 
 What are the requirements?
 
