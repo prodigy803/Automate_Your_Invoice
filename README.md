@@ -52,7 +52,7 @@ Here is a reference for what the key-words mean inside in the template:
 
     - **Order_of_keywords** - Incase the "Same_line_as_any_other_keyword" is not None, then you need to mention how the keywords are appearing in the docs like if Keyword 2 is appearing before Keyword 1, then Order_of_keywords = [Keyword 2, Keyword 1].
 
--**Field 1**- This is just index and you just need to add "Field 1", "Field 2" while adding an additional rule.
+- **Field 1** - This is just index and you just need to add "Field 1", "Field 2" while adding an additional rule.
 
     - **Keyword_as_appearing_in_PDF** - This will be placeholder text around which the information you need to extract exists. For example you want to capture 1000 in Total Amount 1,000.00, then the keyword will be "Total Amount".
 
