@@ -2,9 +2,13 @@
 
 It is a Python Library / Framework that aims to simplify the process of extracting information from invoices and other forms of structured PDFs. The main goal of the library is to make the entire process of automation of information extraction as accessible as possible. While the project may seem like a extension of Invoice2Data, the idea is to make it more beginner friendly and make the idea of "Automation" accessible to everyone. 
 
+**
+
 What is what in this Project?
 
 While the ultimate goal is to have a convenient .exe file, for the purposes of "this" version, we will stick a basic command line interface and give the users options to set the template path either as a individual template or a series of templates (as part of a folder). Next we will then allow the users to set the path of the invoices and then use the templates as a sort of rule-engine to extract the information from the invoices.
+
+**
 
 What are the requirements?
 
