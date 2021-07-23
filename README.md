@@ -24,6 +24,8 @@ Libraries that are always good to have:
 
 The project is being developed in a MacOS requirements so windows users will find that the Requirements.txt doesnt quite work out-of-box for them. I have a work around for that. Please refer to the "Windows Requirements.txt" file for specific instructions on how to get the project running for their systems.
 
+***
+
 # Instructions for Creating the Template:
 
 You may use a excel file or a simple ".txt" file to create a template file.
