@@ -79,6 +79,14 @@ class AutoYInvoice:
 
             text_file.close()
 
+    def delete_all_files(self):
+        # we need to delete all the temporary files that we have built
+
+        for file in self.to_be_deleted_later_invoices_txt:
+            os.remove(file)
+
+        for file in self.to_be_deleted_later_templates_yaml:
+            os.remove(file)
         
 if __name__ == '__main__':
     print('Please enter the path to the invoices')
@@ -90,7 +98,6 @@ if __name__ == '__main__':
     autoyinvoice_instance = AutoYInvoice()
 
     try:
-
         autoyinvoice_instance.process_invoices(invoices_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Invoices')
 
     except:
@@ -98,10 +105,12 @@ if __name__ == '__main__':
         print('Please note the framework requires soft-copy challans and not scanend ones.')
 
     try:
-
         autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Templates')
 
     except:
 
         print('There was some problem processing the template, are you sure you are following the guidelines?')
         print('Please note the use of @---------------Classification-Rules-Over-here---------------------- in the template?')
+
+    
+    autoyinvoice_instance.delete_all_files()
