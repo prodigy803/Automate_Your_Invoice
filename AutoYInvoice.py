@@ -45,6 +45,7 @@ class AutoYInvoice:
                     tags = ["Classification-Rules" in x for x in lines]
                     tags2 = [i for i,x in enumerate(tags) if x]
 
+
                     if len(tags2)>2:
                         print("Please check whether 'Classification-Rules' is coming only twice in the entire template")
                         return "Error-Correct your template"
@@ -54,6 +55,7 @@ class AutoYInvoice:
 
                         for line_v2 in lines_v2:
                             self.rule_base[template_txt][line_v2[0]] = {'keyword':line_v2[1],'Same_Line':line_v2[2],'Sequence':line_v2[3].split(',')}
+                        
                         
             with open(template_txt.replace('txt','yml'), 'w') as outfile:
                 yaml.dump(self.rule_base[template_txt], outfile, default_flow_style=False)
@@ -116,16 +118,8 @@ if __name__ == '__main__':
 
     except:
 
-        print('There was some problem processing the template, are you sure you are following the guidelines?')
-        print('Please note the use of @---------------Classification-Rules-Over-here---------------------- in the template?')
-
-    try:
-        autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Templates')
-    except:
-
-        print('There was some problem processing the template, are you sure you are following the guidelines?')
-        print('Please note the use of @---------------Classification-Rules-Over-here---------------------- in the template?')
-
+        print('There was some problem processing the , are you sure you are following the guidelines?')
+        print('Please note the use of @---------------Body-Rules-Rules-Over-here---------------------- in the template?')
 
     autoyinvoice_instance.process_yaml_file()
 
