@@ -68,6 +68,7 @@ Here is a reference for what the key-words mean inside in the template:
     - **Type_of_information** - You need to specify whether the information we are extracting is a number, text or a date. For example in our example we were extracting "1000" so its a number. The different types of information that you can specify is:
         - Number
         - Text
+        - Multiple Text
         - Date - Then you need to enter the format of the date (DD/MM/YYYY) or (DD/MM/YY) or whatever the actual format is .
 
     - **Any_Free_Floating_Text_Inbetween** - This tells me whether there is any free floating text between the "Keyword *" and the required information that is to be extracted. Please note that if the targeted information is a text and there is presence of free floating text in the document, it can cause incorrect data to be extracted so you need to be careful with that. Also note that if a number / date is to be extracted and if a number and the specified dateformat comes in the floating text, that might also cause incorrect information to be extracted.
