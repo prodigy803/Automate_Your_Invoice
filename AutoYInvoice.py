@@ -17,18 +17,20 @@ class AutoYInvoice:
         self.templates_directory = templates_directory
 
         template_txts = glob.glob(templates_directory+'/*.txt')
+
+        print(template_txts)
         
         need_to_classify = False
 
-        
+        self.to_be_deleted_later_templates_yaml = [x.replace('.txt','.yml') for x in template_txts]
+
+
         if len(template_txts) > 1:
             need_to_classify = True
         
         for template_txt in template_txts:
 
             self.rule_base[template_txt] = {}
-
-            print(template_txt)
 
             with open(template_txt, "r+") as f:
                 lines = f.readlines()
@@ -56,28 +58,33 @@ class AutoYInvoice:
             with open(template_txt.replace('txt','yml'), 'w') as outfile:
                 yaml.dump(self.rule_base[template_txt], outfile, default_flow_style=False)
 
-                self.to_be_deleted_later_templates_yaml.append(template_txt.replace('txt','yml'))
-
-        
     def process_invoices(self,invoices_directory = ""):
         self.invoices_directory = invoices_directory
 
         ## OS.walk will be integrated later.
         invoice_pdfs = glob.glob(invoices_directory+'/*.pdf')
-        
+
+        print(invoice_pdfs)
+        self.to_be_deleted_later_invoices_txt = [x.replace('.pdf','.txt') for x in invoice_pdfs]
+
         for invoice_pdf in invoice_pdfs:
-            text_file = open(invoice_pdf.replace('pdf','txt'), "w")
-            
-            self.to_be_deleted_later_invoices_txt.append(invoice_pdf.replace('pdf','txt'))
-            
+            text_file = open(invoice_pdf.replace('pdf','txt'), "w")            
 
             with open(invoice_pdf, "rb") as f:
                 pdf = pdftotext.PDF(f)
                 for page in pdf:
-                    print(page)
                     text_file.write(page)
 
             text_file.close()
+
+
+    def process_yaml_file(self,):
+        for file in self.to_be_deleted_later_templates_yaml:
+            with open(file, 'r') as stream:
+                try:
+                    print(yaml.safe_load(stream))
+                except yaml.YAMLError as exc:
+                    print(exc)
 
     def delete_all_files(self):
         # we need to delete all the temporary files that we have built
@@ -112,5 +119,14 @@ if __name__ == '__main__':
         print('There was some problem processing the template, are you sure you are following the guidelines?')
         print('Please note the use of @---------------Classification-Rules-Over-here---------------------- in the template?')
 
-    
+    try:
+        autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Templates')
+    except:
+
+        print('There was some problem processing the template, are you sure you are following the guidelines?')
+        print('Please note the use of @---------------Classification-Rules-Over-here---------------------- in the template?')
+
+
+    autoyinvoice_instance.process_yaml_file()
+
     autoyinvoice_instance.delete_all_files()
