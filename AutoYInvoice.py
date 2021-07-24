@@ -1,20 +1,34 @@
 import os
 import pdftotext
 import glob
+import pprint
+import yaml
 
 class AutoYInvoice:
 
     def __init__(self):
         self.to_be_deleted_later_txt = []
         self.rule_base = {}
+        self.invoices_directory = ""
+        self.templates_directory = ""
 
     def process_templates(self,templates_directory = ""):
+        self.templates_directory = templates_directory
+
         template_txts = glob.glob(templates_directory+'/*.txt')
+        
         need_to_classify = False
+
+        
         if len(template_txts) > 1:
             need_to_classify = True
         
         for template_txt in template_txts:
+
+            self.rule_base[template_txt] = {}
+
+            print(template_txt)
+
             with open(template_txt, "r+") as f:
                 lines = f.readlines()
             f.close()
@@ -34,20 +48,23 @@ class AutoYInvoice:
 
                     elif len(tags2) == 2:
                         lines_v2 = [x.split('-|-') for x in lines[tags2[0]+1:tags2[1]]]
+
+                        for line_v2 in lines_v2:
+                            self.rule_base[template_txt][line_v2[0]] = {'keyword':line_v2[1],'Same_Line':line_v2[2],'Sequence':line_v2[3].split(',')}
                         
+            with open(template_txt.replace('txt','yml'), 'w') as outfile:
+                yaml.dump(self.rule_base[template_txt], outfile, default_flow_style=False)
 
     def process_invoices(self,invoices_directory = ""):
+        self.invoices_directory = invoices_directory
 
         ## OS.walk will be integrated later.
         invoice_pdfs = glob.glob(invoices_directory+'/*.pdf')
         
         for invoice_pdf in invoice_pdfs:
-            print(invoice_pdf)
-
             text_file = open(invoice_pdf.replace('pdf','txt'), "w")
             
             self.to_be_deleted_later_txt.append(invoice_pdf.replace('pdf','txt'))
-            
             
 
             with open(invoice_pdf, "rb") as f:
