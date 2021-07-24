@@ -1,0 +1,14 @@
+Keyword 1:
+  Same_Line: Same_line_as_any_other_keyword
+  Sequence:
+  - 'Order_of_keywords
+
+    '
+  keyword: Classification_word_1
+Keyword 2:
+  Same_Line: Same_line_as_any_other_keyword
+  Sequence:
+  - 'Order_of_keywords
+
+    '
+  keyword: Classification_word_2
