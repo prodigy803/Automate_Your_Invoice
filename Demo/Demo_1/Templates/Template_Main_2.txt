@@ -2,11 +2,11 @@
 Keyword 1-|-Employees-|-None-|-None
 @---------------Classification-Rules-Ending-Over-here---------------
 
-@---------------Rules-Over-here----------------------
+@---------------Body-Rules-Over-here----------------------
 Field 1-|-TRRN No-|-Right-|-Number-|-None-|-:
 Field 2-|-Invoice No-|-Right-|-Number-|-None-|-:
 Field 3-|-Due Date-|-Right-|-MMM'YY-|-None-|-:
 Field 4-|-Invoice Payment Date-|-Right-|-DD-MMM-YYYY-|-None-|-:
 Field 5-|-Total Amount-|-Right-|-Number-|-None-|-:
 Field 6-|-Total Amount Paid-|-Right-|-Number-|-None-|-:
-@---------------Rules-Ending-Over-here---------------
+@---------------Body-Rules-Ending-Over-here---------------
