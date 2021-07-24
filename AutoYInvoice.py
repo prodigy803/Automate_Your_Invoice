@@ -7,7 +7,8 @@ import yaml
 class AutoYInvoice:
 
     def __init__(self):
-        self.to_be_deleted_later_txt = []
+        self.to_be_deleted_later_invoices_txt = []
+        self.to_be_deleted_later_templates_yaml = []
         self.rule_base = {}
         self.invoices_directory = ""
         self.templates_directory = ""
@@ -55,6 +56,9 @@ class AutoYInvoice:
             with open(template_txt.replace('txt','yml'), 'w') as outfile:
                 yaml.dump(self.rule_base[template_txt], outfile, default_flow_style=False)
 
+                self.to_be_deleted_later_templates_yaml.append(template_txt.replace('txt','yml'))
+
+        
     def process_invoices(self,invoices_directory = ""):
         self.invoices_directory = invoices_directory
 
@@ -64,7 +68,7 @@ class AutoYInvoice:
         for invoice_pdf in invoice_pdfs:
             text_file = open(invoice_pdf.replace('pdf','txt'), "w")
             
-            self.to_be_deleted_later_txt.append(invoice_pdf.replace('pdf','txt'))
+            self.to_be_deleted_later_invoices_txt.append(invoice_pdf.replace('pdf','txt'))
             
 
             with open(invoice_pdf, "rb") as f:
@@ -85,7 +89,19 @@ if __name__ == '__main__':
 
     autoyinvoice_instance = AutoYInvoice()
 
-    autoyinvoice_instance.process_invoices(invoices_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Invoices')
+    try:
 
-    autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Templates')
+        autoyinvoice_instance.process_invoices(invoices_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Invoices')
 
+    except:
+        print('There was some problem processing the invoice, are you sure you are following the guidelines?')
+        print('Please note the framework requires soft-copy challans and not scanend ones.')
+
+    try:
+
+        autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Templates')
+
+    except:
+
+        print('There was some problem processing the template, are you sure you are following the guidelines?')
+        print('Please note the use of @---------------Classification-Rules-Over-here---------------------- in the template?')
