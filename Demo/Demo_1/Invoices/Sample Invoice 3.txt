@@ -1,10 +1,0 @@
-       Employees State Insurance Company
-
-TRRN No :                  1011000234
-Invoice No :               10012
-Due Date :                 Apr'21
-Invoice Payment Date :     12-Apr-2021
-Total Amount :             1,300.00
-Total Amount Paid :        1,300.00
-Total Amount Remaining :   0
-

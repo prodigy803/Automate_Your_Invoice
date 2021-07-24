@@ -1,18 +1,0 @@
-                                      Form GST PMT - 06 Payment Challan
-                                                  (See Rule 87(2))
-                                   Challan for deposit of goods and services tax
-CPIN:         17093300004748 Challan Generated on : 12/09/2017                     Expiry Date : 27/09/2017
-                                               Details of Taxpayer
-GSTIN:        12BAIPT2918D2ZE E-mail id: pjmanchesterlover@gmail.com               Mobile No. 9833457730
-Name:         Prodigy Git Limited Address: India
-                                     Details of Deposit (All Amount in Rs.)
-Government Major Head                                               Minor Head
-                                  Tax                       Interest Penalty       Fee        Others    Total
-              CGST(0005)          1000                      -         -            -          -         1000
- Government IGST(0008)            -                         -         -            -          -         -
-   of India   CESS(0009)          -                         -         -            -          -         -
-              Sub-Total           1000                      0         0            0          0         1000
-Tamil Nadu SGST(0006)             -                         -         -            -          -         -
-Total Amount                                                                                                 1000
-Total Amount (in words)                                                                  Rupees One Thousand Only
-
