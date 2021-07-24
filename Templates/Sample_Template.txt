@@ -3,7 +3,7 @@ Keyword 1-|-Classification_word_1-|-Same_line_as_any_other_keyword-|-Order_of_ke
 Keyword 2-|-Classification_word_2-|-Same_line_as_any_other_keyword-|-Order_of_keywords
 @---------------Classification-Rules-Ending-Over-here---------------
 
-@---------------Rules-Over-here----------------------
+@---------------Body-Rules-Over-here----------------------
 Field 1-|-Keyword_as_appearing_in_PDF-|-Where_is_the_target_information-|-Type_of_information-|-Any_Free_Floating_Text_Inbetween-|-Any_Special_Character_delimiting_Keyword_&_Target_information
 Field 2-|-Keyword_as_appearing_in_PDF-|-Where_is_the_target_information-|-Type_of_information-|-Any_Free_Floating_Text_Inbetween-|-Any_Special_Character_delimiting_Keyword_&_Target_information
-@---------------Rules-Ending-Over-here---------------
+@---------------Body-Rules-Ending-Over-here---------------
