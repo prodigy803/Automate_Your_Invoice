@@ -130,6 +130,7 @@ class AutoYInvoice:
             return str(value)
 
         elif ("M" in value) or ("Y" in value) :
+            print(value)
             return dateutil.parser.parse(value)
 
     def extract_data(self):
@@ -141,10 +142,6 @@ class AutoYInvoice:
                     templates.append(yaml.safe_load(stream))
                 except yaml.YAMLError as exc:
                     print(exc)
-
-        # classification_keys = []
-        
-        matching_dict = {}
 
         # Lets go through one by one template
         for template in templates:
@@ -160,8 +157,10 @@ class AutoYInvoice:
                     # Now let us read the invoices one by one and check where that word is classifying
 
                     for invoice in self.to_be_deleted_later_invoices_txt:
-                        print(invoice)
-                        # matching_dict = {}
+                        counter =0
+                        matching_dict = []
+                        sub_matched_dict = {}
+                        # print(invoice)
                         with open(invoice, "r+") as f:
                             lines = f.readlines()
 
@@ -173,7 +172,7 @@ class AutoYInvoice:
                             for field_key in template.keys():
 
                                 # Filtering for field keys
-                                 if "Field" in field_key:
+                                if "Field" in field_key:
                                     
                                     # Parsing the template for the final extraction:
                                     word_to_be_searched = template[field_key]['keyword']
@@ -186,7 +185,8 @@ class AutoYInvoice:
                                         
                                         if word_to_be_searched in line:
                                             
-                                            sub_matched_dict = {}
+                                            # print('word matched',word_to_be_searched)
+                                            
                                             line = 'start_tag ' + line
                                             line = line.replace(any_delimiter," " + any_delimiter + " ")
                                             line = re.sub(' +', ' ', line)
@@ -199,28 +199,21 @@ class AutoYInvoice:
                                                 line = line.split()
 
                                                 if where_is_the_word == "Right":
-                                                    print('Right')
+                                                    # print('Right')
 
                                                     if any_delimiter == "None":
 
                                                         word = line[line.index(word_to_be_searched)+1]
                                                         
-                                                        try:
-                                                            sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
-
-                                                        except:
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
+
                                                         if line[line.index(word_to_be_searched)+1] == any_delimiter:
                                                             
                                                             word = line[line.index(word_to_be_searched)+2]
-                                                            print('Not None',word)
-                                                            try:
-                                                                sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
 
-                                                            except:
-                                                                sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                 elif where_is_the_word == "Left":
                                                     
@@ -228,62 +221,40 @@ class AutoYInvoice:
                                                         
                                                         word = line[line.index(word_to_be_searched)-1]
 
-                                                        try:
-                                                            sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
-
-                                                        except:
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
 
                                                         if line[line.index(word_to_be_searched)-1] == any_delimiter:
                                                             word = line[line.index(word_to_be_searched)-2]
 
-                                                            try:
-                                                                sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
-                                                            except:
-                                                                sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
-
-                                                try:
-                                                    counter +=1
-                                                    matching_dict[counter] = sub_matched_dict
-                                                except:
-                                                    counter = 0
-                                                    matching_dict[counter] = sub_matched_dict
-                                            
                                             elif len(word_to_be_searched.split()) > 1:
 
                                                 if where_is_the_word == "Right":
 
                                                     if any_delimiter == "None":
-                                                        print('Currently Matching Multi word Right None')
+
                                                         word_len = len(word_to_be_searched)
 
                                                         line = line[line.index(word_to_be_searched)+ word_len:]
 
                                                         word = line.split()[0]
-                                                        try:
-                                                            sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
-
-                                                        except:
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
 
                                                         word_len = len(word_to_be_searched)
 
-                                                        if line[line.index(word_to_be_searched)+word_len + 2] == any_delimiter:
-
-                                                            line = line[line.index(word_to_be_searched)+ word_len+2:]
+                                                        if line[line.index(word_to_be_searched)+word_len + 1] == any_delimiter:
+                                                            
+                                                            line = line[line.index(word_to_be_searched)+ word_len+3:]
 
                                                             word = line.split()[0]
 
-                                                            try:
-                                                                sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
-
-                                                            except:
-                                                                sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                 elif where_is_the_word == "Left":
                                                     
@@ -292,37 +263,27 @@ class AutoYInvoice:
                                                         word_len = len(word_to_be_searched)
 
                                                         line = line[:line.index(word_to_be_searched)]
+                                                        
                                                         word = line.split()[-1]
 
-                                                        try:
-                                                            sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
-
-                                                        except:
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
 
                                                         word_len = len(word_to_be_searched)
 
-                                                        if line[line.index(word_to_be_searched)+word_len - 2] == any_delimiter:
+                                                        if line[line.index(word_to_be_searched)+word_len - 1] == any_delimiter:
 
                                                             line = line[:line.index(word_to_be_searched)]
+                                                            
                                                             word = line.split()[-2]
 
-                                                            try:
-                                                                sub_matched_dict[word_to_be_searched].append(self.type_converter(type = type_of_word, value = word))
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                        
 
-                                                            except:
-                                                                sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
-
-                                                try:
-                                                    counter +=1
-                                                    matching_dict[counter] = sub_matched_dict
-                                                except:
-                                                    counter = 0
-                                                    matching_dict[counter] = sub_matched_dict
-                                                
-                    print(matching_dict)
+                        if bool(sub_matched_dict):
+                            print(invoice)
+                            print(pd.DataFrame.from_dict(sub_matched_dict))
         
 if __name__ == '__main__':
     print('Please enter the path to the invoices')
