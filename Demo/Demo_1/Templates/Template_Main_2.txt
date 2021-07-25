@@ -8,5 +8,5 @@ Field 2-|-Invoice No-|-Right-|-Number-|-None-|-:
 Field 3-|-Due Date-|-Right-|-MMM'YY-|-None-|-:
 Field 4-|-Invoice Payment Date-|-Right-|-DD-MMM-YYYY-|-None-|-:
 Field 5-|-Total Amount-|-Right-|-Number-|-None-|-:
-Field 6-|-Total Amount Paid-|-Right-|-Number-|-None-|-:
+Field 6-|-Amount Paid-|-Right-|-Number-|-None-|-:
 @---------------Body-Rules-Ending-Over-here---------------
