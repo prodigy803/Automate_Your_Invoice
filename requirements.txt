@@ -6,6 +6,7 @@ cairo=1.16.0=h8023c5d_1
 certifi=2021.5.30=py38hecd8cb5_0
 curl=7.71.1=hb0a8c7a_1
 dateparser=1.0.0=pypi_0
+et-xmlfile=1.1.0=pypi_0
 fontconfig=2.13.1=ha9ee91d_0
 freetype=2.10.4=ha233b18_0
 fuzzywuzzy=0.18.0=pypi_0
@@ -27,8 +28,11 @@ libxml2=2.9.12=hcdb78fc_0
 llvm-openmp=10.0.0=h28b9765_0
 lz4-c=1.9.3=h23ab428_0
 ncurses=6.2=h0a44026_1
+numpy=1.21.1=pypi_0
 openjpeg=2.3.0=hb95cd4c_1
+openpyxl=3.0.7=pypi_0
 openssl=1.1.1k=h9ed2024_0
+pandas=1.3.0=pypi_0
 pcre=8.45=h23ab428_0
 pdftotext=2.1.6=pypi_0
 pip=21.1.3=py38hecd8cb5_0
@@ -39,6 +43,7 @@ python=3.8.10=h88f2d9e_7
 python-dateutil=2.8.2=pypi_0
 python-levenshtein=0.12.2=pypi_0
 pytz=2021.1=pypi_0
+pyyaml=5.4.1=pypi_0
 readline=8.1=h9ed2024_0
 regex=2021.7.6=pypi_0
 setuptools=52.0.0=py38hecd8cb5_0
