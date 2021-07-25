@@ -57,12 +57,13 @@ Here is a reference for what the key-words mean inside in the template:
     - **Keyword_as_appearing_in_PDF** - This will be placeholder text around which the information you need to extract exists. For example you want to capture 1000 in Total Amount 1,000.00, then the keyword will be "Total Amount".
 
     - **Where_is_the_target_information** - This is another crucial piece of information as sometimes we need access to information on the left of the keyword. For our previous example of "Total Amount 1,000.00", the Where_is_the_target_information = 'Right'. Incase the example was 1000 Total Amount, then you would use "Left". Here are all the different tags that you can mention:
-        - Left
-        - Right
-        - Above
-        - Below
-        - Leftmost - incase the word is on the first item in the row.
-        - Rightmost - incase the word is on the last item in the row.
+
+        - Left - Currently Working
+        - Right - Currently Working
+        - Above - To be integrated in V2
+        - Below - To be integrated in V2
+        - Leftmost - incase the word is on the first item in the row.  - To be integrated in V2
+        - Rightmost - incase the word is on the last item in the row.  - To be integrated in V2
 
 
     - **Type_of_information** - You need to specify whether the information we are extracting is a number, text or a date. For example in our example we were extracting "1000" so its a number. The different types of information that you can specify is:
@@ -74,3 +75,6 @@ Here is a reference for what the key-words mean inside in the template:
     - **Any_Free_Floating_Text_Inbetween** - This tells me whether there is any free floating text between the "Keyword *" and the required information that is to be extracted. Please note that if the targeted information is a text and there is presence of free floating text in the document, it can cause incorrect data to be extracted so you need to be careful with that. Also note that if a number / date is to be extracted and if a number and the specified dateformat comes in the floating text, that might also cause incorrect information to be extracted.
 
     - **Any_Special_Character_delimiting_Keyword_**&_Target_information - if Any_Free_Floating_Text_Inbetween is None, then you can specific if there any special delimiter that is seperating the keyword and the targetd information. For our example, there is no special delimiter, but if our example becomes this "Total Amount = 1000", then the delimiter is "=".
+
+# Ending Output:
+- As of now the output is being delivered "Invoice Wise" into individual excel files. Later on the plan is to consolidate the invoices based on the template and give a consolidated excel instead of standalone excel files.
