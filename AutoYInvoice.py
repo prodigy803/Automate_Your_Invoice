@@ -10,72 +10,108 @@ import re
 class AutoYInvoice:
 
     def __init__(self):
+
+        # this variable is required for storing the address of converted invoices(PDF2Text) and for deleting those later.
         self.to_be_deleted_later_invoices_txt = []
+
+        # this variable is required for storing the address of processed templates in yaml files and for deleting those later.
+        # another idea for a future release is that this can be probably left as a choice to the end user, however that will make it
+        # closer to Invoice2Data than I intended to be.
         self.to_be_deleted_later_templates_yaml = []
+
+        # stores an internal copy of the yaml files in this variable. Can be removed after storing the yaml files.
         self.rule_base = {}
+
+        # Once set, we dont need to change the following variables.
         self.invoices_directory = ""
         self.templates_directory = ""
 
     def process_templates(self,templates_directory = ""):
         self.templates_directory = templates_directory
 
+        # glob is library that retrieves all the files/folders that fit the end description (.txt) in our case.
         template_txts = glob.glob(templates_directory+'/*.txt')
 
-        # print(template_txts)
-        
+        # This variable is set incase there are multiple templates for all the invoices. 
+        # As of now this is more of a critical functionality hence I have included it.
+        # v1.1 will have support for just one template.
         need_to_classify = False
 
+        # Set the to_be_deleted_later_templates_yaml over here:
         self.to_be_deleted_later_templates_yaml = [x.replace('.txt','.yml') for x in template_txts]
 
 
+        # If there are multiple templates, set the need-to-classify variable here:
         if len(template_txts) > 1:
             need_to_classify = True
         
+        # lets go through the templates one by one
         for template_txt in template_txts:
-
+            
+            # Initialize the internal rule-dict for that particular template.
             self.rule_base[template_txt] = {}
 
+            # Read the template file one by one.
             with open(template_txt, "r+") as f:
                 lines = f.readlines()
             f.close()
 
+            # There are some "\n" at the end of the lines so we need to replace that or it will create an issue while creating the final
+            # yaml files.
             lines = [x.replace('\n','') for x in lines]
 
             if need_to_classify:
+
+                # if there are multiple templates and the phrase "Classification-Rules-Over-here" is not mentioned, prompt the user to correct the template
                 if not any(["Classification-Rules-Over-here" in x for x in lines]):
                     print("Please mention the classification words and mention Classification-Rules-Over-here in the template files")
                     return "Error-Please Enter the classification tags"
 
                 else:
+                    # Get the tags(True or False) for the lines of template that have the phrase Classification-Rules
                     tags_classification_rules = ["Classification-Rules" in x for x in lines]
+
+                    # Get the indexs of the tags that are True
                     tags_classification_rules_2 = [i for i,x in enumerate(tags_classification_rules) if x]
 
-
+                    # if there is a collision of phrases, we need to prompt the user and tell them that the phrase needs to be unique.
                     if len(tags_classification_rules_2)>2:
                         print("Please check whether 'Classification-Rules' is coming only twice in the entire template")
                         return "Error-Correct your template"
-
+                    
+                    # if there are two tags only, then proceed.
                     elif len(tags_classification_rules_2) == 2:
+                        # get the individual classification tags.
                         lines_v2 = [x.split('-|-') for x in lines[tags_classification_rules_2[0]+1:tags_classification_rules_2[1]]]
                     
+                    # lets go through the individual classification rules.
                     for line_v2 in lines_v2:
+                        # Here we are setting individual classification tags.
 
                         self.rule_base[template_txt][line_v2[0]] = {'keyword':line_v2[1],'Same_Line':line_v2[2],'Sequence':line_v2[3].split(',')}
                     
+                    # Lets go through the Body Rules
                     tags_body_rules = ["Body-Rules" in x for x in lines]
+
+                    # Get the indexs of the tags that are True
                     tags_body_rules_2 = [i for i,x in enumerate(tags_body_rules) if x]
 
+                    # similarly if there are more than 2 body tags, prompt the user to correct that mistake.
                     if len(tags_body_rules_2)>2:
                         print("Please check whether 'Classification-Rules' is coming only twice in the entire template")
                         return "Error-Correct your template"
 
+                    # lets go through the individual body rules.
                     elif len(tags_body_rules_2) == 2:
-                        lines_v2 = [x.split('-|-') for x in lines[tags_body_rules_2[0]+1:tags_body_rules_2[1]]]
+                        # Here we are getting individual body tags.
 
-                    # print(lines_v2)
+                        lines_v2 = [x.split('-|-') for x in lines[tags_body_rules_2[0]+1:tags_body_rules_2[1]]]
+                    
                     for line_v2 in lines_v2:
+                        # Here we are setting individual body tags.
                         self.rule_base[template_txt][line_v2[0]] = {'keyword':line_v2[1],'Position':line_v2[2],'Type':line_v2[3],'Free Floating':line_v2[4],'Delimiter':line_v2[5]}
 
+            # lets write down the internal rule-dicts into yaml file for better debugging and processing.
             with open(template_txt.replace('txt','yml'), 'w') as outfile:
                 yaml.dump(self.rule_base[template_txt], outfile, default_flow_style=False)
 
