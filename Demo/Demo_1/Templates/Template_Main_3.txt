@@ -3,8 +3,8 @@ Keyword 1-|-Form GST PMT-|-None-|-None
 @---------------Classification-Rules-Ending-Over-here---------------
 
 @---------------Body-Rules-Over-here----------------------
-Field 1-|-CPIN-|-RIGHT-|-Number-|-None-|-:
+Field 1-|-CPIN-|-Right-|-Number-|-None-|-:
 Field 2-|-GSTIN-|-Right-|-Text-|-None-|-:
 Field 3-|-Name-|-Right-|-Text-|-None-|-:
-Field 4-|-Total Amount-|-Right-|-Number-|-None-|-:
+Field 4-|-Total Amount-|-Right-|-Number-|-None-|-None
 @---------------Body-Rules-Ending-Over-here---------------

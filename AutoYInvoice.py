@@ -132,7 +132,7 @@ class AutoYInvoice:
             return str(value)
 
         elif ("M" in type_of_word) or ("Y" in type_of_word) :
-            print(value)
+            # print(value)
             return dateutil.parser.parse(value)
 
     def next_number_matcher(self,type_of_word="Number",value=0):
@@ -175,7 +175,7 @@ class AutoYInvoice:
                         counter =0
                         matching_dict = []
                         sub_matched_dict = {}
-                        print(invoice)
+                        # print(invoice)
                         with open(invoice, "r+") as f:
                             lines = f.readlines()
 
@@ -210,7 +210,7 @@ class AutoYInvoice:
                                             for character in ["₹","$"]:
                                                 line = line.replace(character,'')
                                             
-                                            print(word_to_be_searched)
+                                            
                                             if len(word_to_be_searched.split()) == 1:
                                                 
                                                 line = line.split()
@@ -222,7 +222,7 @@ class AutoYInvoice:
                                                         word = line[line.index(word_to_be_searched)+1]
                                                         
                                                         sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                        break
                                                     elif any_delimiter != "None":
                                                         
                                                         if line[line.index(word_to_be_searched)+1] == any_delimiter:
@@ -230,7 +230,7 @@ class AutoYInvoice:
                                                             word = line[line.index(word_to_be_searched)+2]
 
                                                             sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                            break
                                                 elif where_is_the_word == "Left":
                                                     
                                                     if any_delimiter == "None":
@@ -238,17 +238,15 @@ class AutoYInvoice:
                                                         word = line[line.index(word_to_be_searched)-1]
 
                                                         sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                        break
                                                     elif any_delimiter != "None":
 
                                                         if line[line.index(word_to_be_searched)-1] == any_delimiter:
                                                             word = line[line.index(word_to_be_searched)-2]
 
                                                             sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                            break
                                             elif len(word_to_be_searched.split()) > 1:
-
-                                                print('Multiple words',word_to_be_searched,where_is_the_word,any_delimiter)
 
                                                 if where_is_the_word == "Right":
 
@@ -262,7 +260,7 @@ class AutoYInvoice:
 
                                                         if self.next_number_matcher(type_of_word=type_of_word, value = word):
                                                             sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                            break
                                                     elif any_delimiter != "None":
 
                                                         word_len = len(word_to_be_searched)
@@ -274,7 +272,7 @@ class AutoYInvoice:
                                                             word = line.split()[0]
                                                     
                                                             sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                            break
 
                                                 elif where_is_the_word == "Left":
                                                     
@@ -287,7 +285,8 @@ class AutoYInvoice:
                                                         word = line.split()[-1]
 
                                                         sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-
+                                                        break
+                                                    
                                                     elif any_delimiter != "None":
 
                                                         word_len = len(word_to_be_searched)
@@ -299,11 +298,11 @@ class AutoYInvoice:
                                                             word = line.split()[-2]
 
                                                             sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
-                                
+                                                            break
 
                         if bool(sub_matched_dict):
-                            print(invoice)
-                            print(pd.DataFrame.from_dict(sub_matched_dict))
+                            # print(invoice)
+                            pd.DataFrame.from_dict(sub_matched_dict).to_excel(invoice.replace('.txt','.xlsx'),index=False)
         
 if __name__ == '__main__':
     print('Please enter the path to the invoices')
@@ -333,4 +332,6 @@ if __name__ == '__main__':
 
     # autoyinvoice_instance.process_yaml_file()
 
-    # autoyinvoice_instance.delete_all_files()
+    autoyinvoice_instance.delete_all_files()
+
+    print('Invoices Converted Successfully')
