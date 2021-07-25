@@ -101,6 +101,8 @@ class AutoYInvoice:
 
 
     def process_yaml_file(self,):
+        # since the yaml files have been stored to be deleted later, we can just access those files to delete later on.
+
         for file in self.to_be_deleted_later_templates_yaml:
             with open(file, 'r') as stream:
                 try:
@@ -117,23 +119,36 @@ class AutoYInvoice:
         for file in self.to_be_deleted_later_templates_yaml:
             os.remove(file)
 
-    def type_converter(self,type = int, value=0):
+    def type_converter(self,type_of_word = "Number", value=0):
 
         # print(value)
 
         dates = ['DD-MMM-YYYY']
 
-        if type == "Number":
+        if type_of_word == "Number":
             return float(value.replace(',',''))
         
-        elif (type == "Multiple Text") or (type == "Text"):
+        elif (type_of_word == "Multiple Text") or (type_of_word == "Text"):
             return str(value)
 
-        elif ("M" in value) or ("Y" in value) :
+        elif ("M" in type_of_word) or ("Y" in type_of_word) :
             print(value)
             return dateutil.parser.parse(value)
 
-    def extract_data(self):
+    def next_number_matcher(self,type_of_word="Number",value=0):
+        if value.isdigit() and type_of_word == "Number":
+            return True
+
+        elif value.isalpha() and ((type_of_word == "Text") or (type_of_word=='Multiple Text')):
+            return True
+        
+        elif ("M" or "Y" in type_of_word):
+            return True
+        else:
+            return False
+
+
+    def extract_data(self,value=0):
         templates = []
 
         for file in self.to_be_deleted_later_templates_yaml:
@@ -160,7 +175,7 @@ class AutoYInvoice:
                         counter =0
                         matching_dict = []
                         sub_matched_dict = {}
-                        # print(invoice)
+                        print(invoice)
                         with open(invoice, "r+") as f:
                             lines = f.readlines()
 
@@ -180,13 +195,14 @@ class AutoYInvoice:
                                     type_of_word = template[field_key]['Type']
                                     any_delimiter = template[field_key]['Delimiter']
 
+                                    # if "Y" in type_of_word:
+                                    #     print(word_to_be_searched, type_of_word, where_is_the_word, any_delimiter)
+
                                     # now lets check where that word to be searched is coming
                                     for line in lines:
                                         
                                         if word_to_be_searched in line:
-                                            
-                                            # print('word matched',word_to_be_searched)
-                                            
+                                                                                        
                                             line = 'start_tag ' + line
                                             line = line.replace(any_delimiter," " + any_delimiter + " ")
                                             line = re.sub(' +', ' ', line)
@@ -194,26 +210,26 @@ class AutoYInvoice:
                                             for character in ["₹","$"]:
                                                 line = line.replace(character,'')
                                             
+                                            print(word_to_be_searched)
                                             if len(word_to_be_searched.split()) == 1:
                                                 
                                                 line = line.split()
 
                                                 if where_is_the_word == "Right":
-                                                    # print('Right')
 
                                                     if any_delimiter == "None":
 
                                                         word = line[line.index(word_to_be_searched)+1]
                                                         
-                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
-
+                                                        
                                                         if line[line.index(word_to_be_searched)+1] == any_delimiter:
                                                             
                                                             word = line[line.index(word_to_be_searched)+2]
 
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
                                                 elif where_is_the_word == "Left":
                                                     
@@ -221,16 +237,18 @@ class AutoYInvoice:
                                                         
                                                         word = line[line.index(word_to_be_searched)-1]
 
-                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
 
                                                         if line[line.index(word_to_be_searched)-1] == any_delimiter:
                                                             word = line[line.index(word_to_be_searched)-2]
 
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
                                             elif len(word_to_be_searched.split()) > 1:
+
+                                                print('Multiple words',word_to_be_searched,where_is_the_word,any_delimiter)
 
                                                 if where_is_the_word == "Right":
 
@@ -241,20 +259,22 @@ class AutoYInvoice:
                                                         line = line[line.index(word_to_be_searched)+ word_len:]
 
                                                         word = line.split()[0]
-                                                        
-                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+
+                                                        if self.next_number_matcher(type_of_word=type_of_word, value = word):
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
 
                                                         word_len = len(word_to_be_searched)
 
                                                         if line[line.index(word_to_be_searched)+word_len + 1] == any_delimiter:
-                                                            
-                                                            line = line[line.index(word_to_be_searched)+ word_len+3:]
+
+                                                            line = line[line.index(word_to_be_searched)+ word_len+2:]
 
                                                             word = line.split()[0]
+                                                    
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
 
                                                 elif where_is_the_word == "Left":
                                                     
@@ -266,7 +286,7 @@ class AutoYInvoice:
                                                         
                                                         word = line.split()[-1]
 
-                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
+                                                        sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
 
                                                     elif any_delimiter != "None":
 
@@ -278,8 +298,8 @@ class AutoYInvoice:
                                                             
                                                             word = line.split()[-2]
 
-                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type = type_of_word, value = word)]
-                        
+                                                            sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
+                                
 
                         if bool(sub_matched_dict):
                             print(invoice)
@@ -313,4 +333,4 @@ if __name__ == '__main__':
 
     # autoyinvoice_instance.process_yaml_file()
 
-    autoyinvoice_instance.delete_all_files()
+    # autoyinvoice_instance.delete_all_files()
