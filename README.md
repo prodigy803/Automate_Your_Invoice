@@ -78,3 +78,9 @@ Here is a reference for what the key-words mean inside in the template:
 
 # Ending Output:
 - As of now the output is being delivered "Invoice Wise" into individual excel files. Later on the plan is to consolidate the invoices based on the template and give a consolidated excel instead of standalone excel files.
+
+Footnote:
+There are still some bugs in the code that will be ironed out by v1.1 (such as support for just one invoice type). Please be assured that the demo is worked correct as expected and you will be able to see the raw output in the invoice folder of "Demo / Demo1".
+
+Thanks,
+PJ
