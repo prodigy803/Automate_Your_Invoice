@@ -1,0 +1,10 @@
+@---------------Classification-Rules-Over-here----------------------
+Keyword 1-|-COMPANY NAME-|-None-|-None
+@---------------Classification-Rules-Ending-Over-here---------------
+
+@---------------Body-Rules-Over-here----------------------
+Field 1-|-Attention-|-Right-|-Multiple Text-|-None-|-:
+Field 2-|-Project Title-|-Right-|-Multiple Text-|-None-|-:
+Field 3-|-Total-|-Right-|-Number-|-None-|-None
+Field 4-|-VAT-|-Right-|-Text-|-None-|-None
+@---------------Body-Rules-Ending-Over-here---------------
