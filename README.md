@@ -80,10 +80,10 @@ Here is a reference for what the key-words mean inside in the template:
 # Ending Output:
 - As of now the output is being delivered "Invoice Wise" into individual excel files. Later on the plan is to consolidate the invoices based on the template and give a consolidated excel instead of standalone excel files.
 
-- As of now you may use a sample pandas based script to consolidate the excel files as per your need.
+- As of now you may use a simple pandas based script to consolidate the excel files as per your need.
 
 Footnote:
-There are still some bugs in the code that will be ironed out by v1.1 (such as support for just one invoice type). Please be assured that the demo is worked correct as expected and you will be able to see the raw output in the invoice folder of "Demo / Demo1".
+There are still some bugs in the code that will be ironed out by v1.2. Please be assured that the demo is worked correct as expected and you will be able to see the raw output in the invoice folder of "Demo/Demo_1" or "Demo/Demo_2".
 
 Thanks,
 PJ
