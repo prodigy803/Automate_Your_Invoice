@@ -150,10 +150,14 @@ class AutoYInvoice:
         ## OS.walk will be integrated later.
         invoice_pdfs = glob.glob(invoices_directory+'/*.pdf')
 
+        ## if there are no pdfs, then u need to prompt the user telling them to point the correct folder
         if len(invoice_pdfs) == 0:
             print('Are you sure you have mentioned the correct invoices directory (containing .pdf files)')
 
+        ## if there are more than zero pdfs process them and convert them into text files.
         elif len(invoice_pdfs)>=1:
+
+            # store the file names so that we can delete the temporary files later on.
             self.to_be_deleted_later_invoices_txt = [x.replace('.pdf','.txt') for x in invoice_pdfs]
 
             for invoice_pdf in invoice_pdfs:
@@ -166,7 +170,7 @@ class AutoYInvoice:
 
                 text_file.close()
 
-
+    # This function is for purely checking out the content of the yaml files.
     def process_yaml_file(self,):
         # since the yaml files have been stored to be deleted later, we can just access those files to delete later on.
 
@@ -177,6 +181,7 @@ class AutoYInvoice:
                 except yaml.YAMLError as exc:
                     print(exc)
 
+    # this one sort of cleans up all the intermediate files that were processed earlier.
     def delete_all_files(self):
         # we need to delete all the temporary files that we have built
 
@@ -185,18 +190,35 @@ class AutoYInvoice:
 
         for file in self.to_be_deleted_later_templates_yaml:
             os.remove(file)
-
+    
+    # This function ensures that the word that is extracted from the invoice matches the type that it is mentioned as in the template.
     def type_converter(self,type_of_word = "Number", value=0):
 
         if type_of_word == "Number":
-            return float(value.replace(',',''))
+            try:
+                return float(value.replace(',',''))
+
+            except:
+                print("{} is not a number/float".format(value))
+                return None
         
         elif (type_of_word == "Multiple Text") or (type_of_word == "Text"):
-            return str(value)
+            try:
+                return str(value)
+
+            except:
+                print("{} is not a string".format(value))
+                return None
 
         elif ("M" in type_of_word) or ("Y" in type_of_word) :
-            return dateutil.parser.parse(value)
+            try:
+                return dateutil.parser.parse(value)
 
+            except:
+                print("some issue with the date time for {}".format(value))
+                return None
+    
+    # checking if the next value/word matches the format mentioned in the template.
     def next_number_matcher(self,type_of_word="Number",value=0):
 
         if value.isdigit() and type_of_word == "Number":
@@ -211,8 +233,12 @@ class AutoYInvoice:
         else:
             return False
 
+    # this is the refactored code, initially it was stored under extract_data
+    # this is essentially accepting a template(matched in case of classificaiton),
+    # the lines of the invoice and the invoice name for storing the data in a excel file.
     def extract_final_data(self,template="",lines="",invoice_name=""):
-
+        
+        # this will store all the hits that we get in a particular invoice.
         sub_matched_dict = {}
 
         # Select one field key at a time
@@ -227,19 +253,33 @@ class AutoYInvoice:
                 type_of_word = template[field_key]['Type']
                 any_delimiter = template[field_key]['Delimiter']
 
-                # now lets check where that word to be searched is coming
+                # Now lets check where that word to be searched is coming
                 for line in lines:
                     
                     if word_to_be_searched in line:
-                                                                    
+                        # In case the word is on the left most, i want to avoid errors that might come during processing.                                 
                         line = 'start_tag ' + line
+
+                        # This is because sometimes the delimiters are actually stuck to the words and i have to have proper spacing
+                        # This is for making the .split() function work as desired and not have unintended consequences.
                         line = line.replace(any_delimiter," " + any_delimiter + " ")
+
+                        # This removes all the spaces from the doc.
                         line = re.sub(' +', ' ', line)
 
+                        # These characters maybe stuck in the words too or they maybe unnecessarily coming in the doc which is reduce
+                        # the accuracy of the final output.
                         for character in ["₹","$"]:
                             line = line.replace(character,'')
                         
-                        
+                        # Once the line has been processed, we will check if the word to be searched is one word or multi word.
+                        # If the word_to_be_seached is one word, a simple -> str(line).split().index('word_to_be_seached') will give 
+                        # us the position of the word in a particular line.
+
+                        # However if there are multiple words we need to sort of track the length of the word and search the string(line of invoice) for it,
+                        # rather than converting the string into a list. One we get the start index, we need to do 
+                        # str(line)[str(line).index('word_to_be_seached) : str(line).index('word_to_be_seached) + len(word_to_be_seached)] to get the matched word.
+
                         if len(word_to_be_searched.split()) == 1:
                             
                             line = line.split()
@@ -252,6 +292,7 @@ class AutoYInvoice:
                                     
                                     sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
                                     break
+
                                 elif any_delimiter != "None":
                                     
                                     if line[line.index(word_to_be_searched)+1] == any_delimiter:
@@ -275,6 +316,7 @@ class AutoYInvoice:
 
                                         sub_matched_dict[word_to_be_searched] = [self.type_converter(type_of_word = type_of_word, value = word)]
                                         break
+                            
                         elif len(word_to_be_searched.split()) > 1:
 
                             if where_is_the_word == "Right":
