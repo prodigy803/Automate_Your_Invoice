@@ -10,6 +10,7 @@ It is a Python Library / Framework that aims to simplify the process of extracti
 | What are the requirements?             |
 | Instructions for Creating the Template |
 | Ending Output                          |
+| Future Developement                    |
 
 ---
 
@@ -81,6 +82,18 @@ Here is a reference for what the key-words mean inside in the template:
 - As of now the output is being delivered "Invoice Wise" into individual excel files. Later on the plan is to consolidate the invoices based on the template and give a consolidated excel instead of standalone excel files.
 
 - As of now you may use a simple pandas based script to consolidate the excel files as per your need.
+
+# Future Developement:
+- As of now I am planning for letting users consume this service via multiple ways:
+    - Publish on Pypi
+    - Create a .exe
+    - Create a website - This will open up a huge set of possibilities and I can actually expand the product into multiple things
+        - Create a containerized application using Docker.
+        - Use Cloud ML capabilities for my future features.
+        - Make the solution more accessible.
+    - Create a mobile application for people to upload the doc and get the best results (however this will require a big redesign.)
+
+- Ultimate goal of this project is to contribute to the community in any way possible and learn a lot at the same time.
 
 Footnote:
 There are still some bugs in the code that will be ironed out by v1.2. Please be assured that the demo is worked correct as expected and you will be able to see the raw output in the invoice folder of "Demo/Demo_1" or "Demo/Demo_2".
