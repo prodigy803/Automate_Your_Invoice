@@ -6,11 +6,11 @@ It is a Python Library / Framework that aims to simplify the process of extracti
 
 | Index                                  |
 | ---------------------------------------|
-| [What is what in this Project?] (#what-is-what-in-this-Project? )         |
-| [What are the requirements?] (#what-are-the-requirements?)             |
-| [Instructions for Creating the Template] (# -instructions-for-creating-the-template:) |
-| [Ending Output] (#ending-output:)                          |
-| [Future Developement] (#future-developement:)                    |
+| [What is what in this Project?] (#-what-is-what-in-this-Project? )         |
+| [What are the requirements?] (#-what-are-the-requirements?)             |
+| [Instructions for Creating the Template] (#-instructions-for-creating-the-template:) |
+| [Ending Output] (#-ending-output:)                          |
+| [Future Developement] (#-future-developement:)                    |
 
 ---
 
