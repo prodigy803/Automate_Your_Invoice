@@ -6,19 +6,19 @@ It is a Python Library / Framework that aims to simplify the process of extracti
 
 | Index                                  |
 | ---------------------------------------|
-| What is what in this Project?          |
-| What are the requirements?             |
-| Instructions for Creating the Template |
-| Ending Output                          |
-| Future Developement                    |
+| What is what in this Project? #-what-is-what-in-this-Project?          |
+| What are the requirements? #-what-are-the-requirements?             |
+| Instructions for Creating the Template #-instructions-for-creating-the-template: |
+| Ending Output #-ending-output:                          |
+| Future Developement #-future-developement:                    |
 
 ---
 
-<b>What is what in this Project?</b>
+# What is what in this Project?
 
 While the ultimate goal is to have a convenient .exe file, for the purposes of "this" version, we will stick a basic command line interface and give the users options to set the template path either as a individual template or a series of templates (as part of a folder). Next we will then allow the users to set the path of the invoices and then use the templates as a sort of rule-engine to extract the information from the invoices.
 
-<b>What are the requirements?</b>
+# What are the requirements?
 
 The phase 1 of the project will work on pure system generated invoices. In my professional career as a auditor I described those as "Downloaded from the internet invoices" and not "Scanned invoices". Or in other words, you should be able to select the text from your daily PDF editor (Adobe Acrobat, PDF Xchange etc.). For the "Python" Requirements, please refer to the "Requirements.txt".
 
