@@ -10,14 +10,14 @@ if __name__ == '__main__':
     autoyinvoice_instance = AutoYInvoice()
 
     try:
-        autoyinvoice_instance.process_invoices(invoices_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_2/Invoices')
+        autoyinvoice_instance.process_invoices(invoices_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Invoices')
 
     except:
         print('There was some problem processing the invoice, are you sure you are following the guidelines?')
         print('Please note the framework requires soft-copy challans and not scanend ones.')
 
     try:
-        autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_2/Templates')
+        autoyinvoice_instance.process_templates(templates_directory = '/Users/pushkarajjoshi/Desktop/Projects/Automate_Your_Invoice/Demo/Demo_1/Templates')
 
     except:
 
