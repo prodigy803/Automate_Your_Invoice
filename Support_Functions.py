@@ -451,4 +451,7 @@ class AutoYInvoice:
 
         for file in self.to_be_deleted_later_templates_yaml:
             os.remove(file)
+
+        for file in self.to_be_deleted_later_invoices_txt:
+            os.remove(file.replace('.txt','.xlsx'))
         
