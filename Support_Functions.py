@@ -162,13 +162,27 @@ class AutoYInvoice:
 
             for invoice_pdf in invoice_pdfs:
                 text_file = open(invoice_pdf.replace('pdf','txt'), "w")            
-
+                ocr_flag = False
                 with open(invoice_pdf, "rb") as f:
-                    pdf = pdftotext.PDF(f)
-                    for page in pdf:
-                        text_file.write(page)
 
+                    pdf = pdftotext.PDF(f)
+                    print(pdf)
+                    for page in pdf:
+                        print(page)
+                        
+                        if len(page.strip()) < 5:
+                        
+                            print('The document seems to be scanned, lets perform OCR on it.')
+                            ocr_flag = True
+                            break
+
+                        elif len(page.strip()) > 5:
+                            text_file.write(page)
+
+                    if ocr_flag:
+                        ## Need to perform OCR
                 text_file.close()
+
 
     # This function is for purely checking out the content of the yaml files.
     def process_yaml_file(self,):
