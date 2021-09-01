@@ -415,12 +415,13 @@ class AutoYInvoice:
         writer = pd.ExcelWriter('final_output.xlsx')
 
         consol_dict = {}
+
         # lets read all the excel files and check the columns:
+        # We are essentially clubbing the files together which have the same columns and creating a sheet for them.
+
         for file in self.to_be_deleted_later_invoices_txt:
-            print(file)
             
             excel_file = pd.read_excel(file.replace('.txt','.xlsx'))
-            print(excel_file.columns)
 
             if tuple(excel_file.columns) in consol_dict:
                 consol_dict[tuple(excel_file.columns)].append(file)
@@ -429,6 +430,7 @@ class AutoYInvoice:
 
         counter = 0
 
+        # Here we are iterating through the files and creating the individual excel sheets for them. 
         for key, value in consol_dict.items():
             value = [x.replace('.txt','.xlsx') for x in value]
             
@@ -437,10 +439,16 @@ class AutoYInvoice:
             for file_temp in value:
                 temp_file = pd.read_excel(file_temp)
                 consol_temp = consol_temp.append(temp_file,ignore_index=True)
+            
+            # if there are more than 1048575, store the file in csv format.
+            if consol_temp.shape[0] > 1048575:
+                consol_temp.to_csv("final_output_{}".format(counter),sep='|')
+                counter+=1
 
-            consol_temp.to_excel(writer,sheet_name='Sheet_name_{}'.format(counter))
-
-            counter+=1
+            # else go with excel storage./Users/pushkarajjoshi/Downloads
+            elif consol_temp.shape[0] <= 1048575:
+                consol_temp.to_excel(writer,sheet_name='Sheet_name_{}'.format(counter))
+                counter+=1
        
         writer.save()
 
