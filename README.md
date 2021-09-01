@@ -28,7 +28,7 @@ The phase 1 of the project will work on pure system generated invoices. In my pr
 3. Regex - For all those complex patterns (and probably left for the advanced users)
 4. Dateparse - For Dates - pip install daterparse
 5. FuzzyWuzzy - For those fields that we arent sure about - Just did pip install fuzzywuzzy
-6. Python Levenstein - This just speeds us the FuzzyWuzzy Library - pip install python-levenstein
+6. Python Levenstein - This speeds up the FuzzyWuzzy Library - pip install python-levenstein
 
 <b>Libraries that are always good to have:</b>
 1. Numpy - Numerical Computing Library
